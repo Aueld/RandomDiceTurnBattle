@@ -1466,8 +1466,6 @@ namespace EpDiceTurnBattleGame
         {
             if (!gameStart)
             {
-
-                //if (e.X > panelWidth / 2 - buttonStart.Width / 4 && e.X < panelWidth / 2 + buttonStart.Width / 4 && e.Y > 280 && e.Y < 280 + buttonStart.Height / 2)
                 //사각형 범위
                 if(StartButton.Contains(e.X, e.Y))
                 {
