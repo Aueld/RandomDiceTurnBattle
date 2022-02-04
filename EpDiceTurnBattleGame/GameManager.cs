@@ -80,7 +80,7 @@ namespace EpDiceTurnBattleGame
         protected bool enemyDfd;
         protected bool playerMag;
         protected bool enemyMag;
-
+        protected bool firstRoll;
 
         protected Point point = new Point();
 

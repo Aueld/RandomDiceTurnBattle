@@ -23,6 +23,7 @@ namespace EpDiceTurnBattleGame
             TurnRoll = false;
             RollDice = false;
             TurnEnd = false;
+            firstRoll = false;
 
             moveCheck = false;
             enemyMoveCheck = false;
@@ -1499,6 +1500,9 @@ namespace EpDiceTurnBattleGame
                     }
                     else
                     {
+                        if (!firstRoll)
+                            firstRoll = true;
+
                         TurnEnd = false;
                         RollDice = true;
                         TurnRoll = true;
@@ -1509,6 +1513,12 @@ namespace EpDiceTurnBattleGame
                 {
                     if (ActionState != 0)
                         return;
+
+                    if (!firstRoll)
+                    {
+                        textBox.Items.Add("주사위를 굴려주세요");
+                        return;
+                    }
 
                     if (TurnEnd)
                     {
