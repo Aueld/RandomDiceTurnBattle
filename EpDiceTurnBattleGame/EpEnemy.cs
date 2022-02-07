@@ -51,10 +51,16 @@ namespace EpDiceTurnBattleGame
             this.HP = hp;
         }
 
-        public void SetStat(int dice, int damage)
+        public void SetStat(int dice, int damage, int critical)
         {
             Atk = dice * damage;
             Dfd = dice * damage * 2;
+
+            if (critical < 15)
+            {
+                Atk = (int)((float)Atk * 1.2f);
+                Dfd = (int)((float)Dfd * 1.2f);
+            }
         }
 
         override public void Draw(Graphics g)

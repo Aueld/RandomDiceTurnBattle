@@ -16,9 +16,10 @@ namespace EpDiceTurnBattleGame
     public partial class Form1 : GameManager
     {
         Random patten = new Random();
+        Random critical = new Random();
         EpDice dice = new EpDice();
 
-        public void Start()
+        private void BoolSetting()
         {
             TurnRoll = false;
             RollDice = false;
@@ -35,6 +36,13 @@ namespace EpDiceTurnBattleGame
             enemyAtk = false;
             enemyDfd = false;
             enemyMag = false;
+        }
+
+        public void Start()
+        {
+            BoolSetting();
+
+            prevAction = -1;
             time = 10;
 
             round = 0;
@@ -1551,13 +1559,13 @@ namespace EpDiceTurnBattleGame
 
         private void SetAllStat()
         {
-            player.SetStat(dice.GetResult()[0], dice.GetResult()[2]);
-            enemy.SetStat(dice.GetResult()[1], dice.GetResult()[2]);
+            criticalVelue = critical.Next(100);
+            player.SetStat(dice.GetResult()[0], dice.GetResult()[2], criticalVelue);
+            enemy.SetStat(dice.GetResult()[1], dice.GetResult()[2], criticalVelue);
         }
 
         private void RunGame()
         {
-
             if (!Mag.Checked)
             {
                 if (!OneAtk.Checked && !OneDfd.Checked || !TwoAtk.Checked && !TwoDfd.Checked)
@@ -1612,6 +1620,13 @@ namespace EpDiceTurnBattleGame
             else if (!check1 && !check2)
                 state = 3;
 
+            if (prevAction == state)
+            {
+                textBox.Items.Add("이전과 같은 행동을 할 수 없습니다. 다른 행동을 취해주세요.");
+
+                textBox.SelectedIndex = textBox.Items.Count - 1;
+                return;
+            }
 
             RollDice = false;
 
@@ -1946,14 +1961,19 @@ namespace EpDiceTurnBattleGame
                     break;
             }
 
+            prevAction = state;
+
             if (player.HP < 0)
                 player.ReSet(0);
             if (enemy.HP < 0)
                 enemy.ReSet(0);
 
+            if (criticalVelue < 15)
+                textBox.Items.Add("Critical Hit");
+
             textBox.SelectedIndex = textBox.Items.Count - 1;
 
-            Invalidate();
+            //Invalidate();
 
             TurnEnding();
 
@@ -1985,11 +2005,13 @@ namespace EpDiceTurnBattleGame
         
         private void GameReSet()
         {
+            prevAction = -1;
+            firstRoll = false;
             gameStart = false;
             textBox.Items.Clear();
             panel1.Visible = false;
-            player.ReSet(300);
-            enemy.ReSet(300);
+            player.ReSet(1000);
+            enemy.ReSet(1000);
         }
 
         private void Mag_CheckedChanged(object sender, EventArgs e)

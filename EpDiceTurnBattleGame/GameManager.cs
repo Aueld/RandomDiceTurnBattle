@@ -61,7 +61,9 @@ namespace EpDiceTurnBattleGame
         protected int bossHp { get; set; }
         protected int curtain { get; set; }
         protected int ActionState { get; set; }
-
+        
+        protected int criticalVelue;
+        protected int prevAction;
         protected int state;      // 0 = 공공, 1 = 방공, 2 = 공방, 3 = 방방, 4 = 마법 // (0 = 0, 0), (1 = 1, 0), (2 = 0, 1), (3 = 1, 1), (4 = 3) 
         protected int stateAI;    // 0 = 공공, 1 = 방공, 2 = 공방, 3 = 방방, 4 = 마법 // (0 = 0, 0), (1 = 1, 0), (2 = 0, 1), (3 = 1, 1), (4 = 3)
         protected int round;
